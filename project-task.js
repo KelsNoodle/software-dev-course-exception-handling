@@ -39,6 +39,7 @@ function addAnimal(name, fee) {
     animals.push(name);
     fees.push(fee);
 }
+
 function getAdoptionFee(animalName) {
     let index = animals.indexOf(animalName);
     if (index === -1) {
@@ -48,24 +49,39 @@ function getAdoptionFee(animalName) {
 }
 // Main program
 console.log("Welcome to the Pet Shelter System");
+
 while (true) {
+    
     let action = readlineSync.question("Choose an action: 'add', 'fee', or 'exit': ").toLowerCase();
     if (action === "exit") {
         console.log("Goodbye!");
         break;
     }
     if (action === "add") {
+        try{
         let animal = readlineSync.question("Enter the animal's name: ");
         let fee = Number(readlineSync.question("Enter the adoption fee: "));
         addAnimal(animal, fee);
         console.log(`${animal} added with a fee of $${fee}.`);
+        }catch (errObj) {
+        console.log(`Error: ${errObj.message}`);
+        }finally {
+        console.log("Returning to Main Menu...");
+        } 
     } else if (action === "fee") {
+        try{
         let animal = readlineSync.question("Enter the animal's name to find its adoption fee: ");
-        console.log(`${animal}'s adoption fee is $${getAdoptionFee(animal)}.`);
-    } else {
+        console.log(`${animal}'s adoption fee is $${getAdoptionFee(animal)}.`); //Error gets thrown here when animal is not in database
+        }catch (errObj) {
+        console.log(`Error: ${errObj.message}`);
+        }finally {
+        console.log("Returning to Main Menu...");
+        } 
+    }
+    else {
         console.log("Invalid action. Please choose 'add', 'fee', or 'exit'.");
     }
-}
+    }
 
 
 
